@@ -20,7 +20,7 @@ composer require maize-tech/laravel-nova-eloquent-sortable
 You can publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag="laravel-nova-eloquent-sortable-config"
+php artisan vendor:publish --tag="nova-eloquent-sortable-config"
 ```
 
 This is the contents of the published config file:
