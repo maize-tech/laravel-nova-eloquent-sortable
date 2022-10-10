@@ -5,7 +5,7 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/maize-tech/laravel-nova-eloquent-sortable/Fix%20PHP%20code%20style%20issues?label=code%20style)](https://github.com/maize-tech/laravel-nova-eloquent-sortable/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/maize-tech/laravel-nova-eloquent-sortable.svg?style=flat-square)](https://packagist.org/packages/maize-tech/laravel-nova-eloquent-sortable)
 
-This package allows you to easily add sortable actions do any model in Laravel Nova.
+This package allows you to easily add sortable actions to any model in Laravel Nova.
 
 > This project is a work-in-progress. Code and documentation are currently under development and are subject to change.
 

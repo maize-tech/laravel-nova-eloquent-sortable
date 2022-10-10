@@ -1,10 +1,12 @@
 {
     "name": "maize-tech/laravel-nova-eloquent-sortable",
-    "description": "This is my package laravel-nova-eloquent-sortable",
+    "description": "Laravel Nova Eloquent Sortable",
     "keywords": [
         "maize-tech",
         "laravel",
-        "laravel-nova-eloquent-sortable"
+        "nova",
+        "eloquent",
+        "sortable"
     ],
     "homepage": "https://github.com/maize-tech/laravel-nova-eloquent-sortable",
     "license": "MIT",
@@ -12,6 +14,7 @@
         {
             "name": "Enrico De Lazzari",
             "email": "enrico.delazzari@h-farm.com",
+            "homepage": "https://innovation.h-farm.com",
             "role": "Developer"
         }
     ],
