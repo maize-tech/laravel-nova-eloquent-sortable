@@ -5,9 +5,12 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/maize-tech/laravel-nova-eloquent-sortable/Fix%20PHP%20code%20style%20issues?label=code%20style)](https://github.com/maize-tech/laravel-nova-eloquent-sortable/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/maize-tech/laravel-nova-eloquent-sortable.svg?style=flat-square)](https://packagist.org/packages/maize-tech/laravel-nova-eloquent-sortable)
 
-This package allows you to easily add sortable actions to any model in Laravel Nova.
+Easily add inline sortable actions to any model in Laravel Nova.
 
-> This project is a work-in-progress. Code and documentation are currently under development and are subject to change.
+>This package is heavily based on Spatie's [Eloquent Sortable](https://github.com/spatie/eloquent-sortable).
+>Please make sure to read its documentation and installation guide before proceeding!
+
+<p align="center"><img src="/art/preview.gif" alt="Laravel Nova Eloquent Sortable in action"></p>
 
 ## Installation
 
@@ -46,9 +49,104 @@ return [
 
 ## Usage
 
+To use the package, add the `Maize\NovaEloquentSortable\HasEloquentSortable` trait to the nova model where you want to have marks:
+
 ```php
-$eloquentSortable = new Maize\EloquentSortable();
-echo $eloquentSortable->echoPhrase('Hello, Maize!');
+use Laravel\Nova\Resource;
+use Maize\NovaEloquentSortable\HasEloquentSortable;
+
+class Model extends Resource {
+    use HasEloquentSortable;
+}
+```
+
+Once done, all you have to do is include all the actions you need for the given model:
+
+```php
+use Maize\NovaEloquentSortable\Actions\MoveOrderDownAction;
+use Maize\NovaEloquentSortable\Actions\MoveOrderUpAction;
+use Maize\NovaEloquentSortable\Actions\MoveToEndAction;
+use Maize\NovaEloquentSortable\Actions\MoveToStartAction;
+
+public function actions(NovaRequest $request)
+{
+    return [
+        MoveOrderDownAction::for($this),
+        MoveToEndAction::for($this),
+        MoveOrderUpAction::for($this),
+        MoveToStartAction::for($this),
+    ];
+}
+```
+
+You can also include the custom OrderColumn field, which allows you to show the order of each entity when indexing them:
+
+```php
+use Maize\NovaEloquentSortable\Fields\OrderColumn;
+
+public function fields(NovaRequest $request)
+{
+    return [
+        OrderColumn::new('Order', static::class),
+    ];
+}
+```
+
+## Available Actions
+
+- [`MoveOrderDownAction`](#moveorderdown)
+- [`MoveToEndAction`](#movetoend)
+- [`MoveOrderUpAction`](#moveorderup)
+- [`MoveToStartAction`](#movetostart)
+
+### MoveOrderDown
+
+The `MoveOrderDownAction` inline action moves the given model down by a single position.
+
+The action is automatically hidden when the model is already in the last position.
+
+### MoveToEnd
+
+The `MoveToEndAction` inline action moves the given model to the last position.
+
+The action is automatically hidden when the model is already in the last position.
+
+### MoveOrderUp
+
+The `MoveOrderUpAction` inline action moves the given model up by a single position.
+
+The action is automatically hidden when the model is already in the first position.
+
+### MoveToStart
+
+The `MoveToStartAction` inline action moves the given model to the first position.
+
+The action is automatically hidden when the model is already in the first position.
+
+## Define a custom visibility
+
+By default, all users who have access to Laravel Nova will be able to see all included sort actions.
+
+If you want to restrict their visibility to some users, you can define a custom `CanSeeSortableAction` invokable class.
+
+Here's an example class checking user's permissions:
+
+```php
+use Laravel\Nova\Http\Requests\NovaRequest;
+
+class CanSeeSortableAction
+{
+    public function __invoke(NovaRequest $request, $model = null, $resource = null): bool
+    {
+        return $request->user()->can('sort_models');
+    }
+}
+```
+
+Once done, all you have to do is reference your custom class in `can_see_sortable_action` attribute under `config/nova-eloquent-sortable.php`:
+
+``` php
+'can_see_sortable_action' => \Path\To\CanSeeSortableAction::class,
 ```
 
 ## Testing
