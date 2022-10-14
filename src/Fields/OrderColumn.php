@@ -13,7 +13,7 @@ class OrderColumn extends Number
     ) {
         return static::make($name, static::attribute($resource))
             ->onlyOnIndex()
-            ->canSee(fn ($request) => EloquentSortableAction::canSeeSortable($request, null, static::class));
+            ->canSee(fn ($request) => EloquentSortableAction::canSeeSortable($request, null, $resource));
     }
 
     public static function attribute(string $resource): string
