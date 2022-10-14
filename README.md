@@ -94,30 +94,30 @@ public function fields(NovaRequest $request)
 
 ## Available Actions
 
-- [`MoveOrderDownAction`](#moveorderdown)
-- [`MoveToEndAction`](#movetoend)
-- [`MoveOrderUpAction`](#moveorderup)
-- [`MoveToStartAction`](#movetostart)
+- [`MoveOrderDownAction`](#moveorderdownaction)
+- [`MoveToEndAction`](#movetoendaction)
+- [`MoveOrderUpAction`](#moveorderupaction)
+- [`MoveToStartAction`](#movetostartaction)
 
-### MoveOrderDown
+### MoveOrderDownAction
 
 The `MoveOrderDownAction` inline action moves the given model down by a single position.
 
 The action is automatically hidden when the model is already in the last position.
 
-### MoveToEnd
+### MoveToEndAction
 
 The `MoveToEndAction` inline action moves the given model to the last position.
 
 The action is automatically hidden when the model is already in the last position.
 
-### MoveOrderUp
+### MoveOrderUpAction
 
 The `MoveOrderUpAction` inline action moves the given model up by a single position.
 
 The action is automatically hidden when the model is already in the first position.
 
-### MoveToStart
+### MoveToStartAction
 
 The `MoveToStartAction` inline action moves the given model to the first position.
 
