@@ -9,7 +9,7 @@ trait HasEloquentSortable
 {
     public static function indexQuery(NovaRequest $request, $query)
     {
-        if (EloquentSortableAction::canSeeSortable($request)) {
+        if (EloquentSortableAction::canSeeSortable($request, null, static::class)) {
             $query->getQuery()->orders = [];
 
             return $query->ordered();

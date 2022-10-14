@@ -16,13 +16,14 @@ abstract class EloquentSortableAction extends Action
             ->onlyInline()
             ->canSee(fn (NovaRequest $request) => static::canSeeSortable(
                 $request,
-                $resource->model()
+                $resource->model(),
+                $resource
             ));
     }
 
-    public static function canSeeSortable(NovaRequest $request, $model = null): bool
+    public static function canSeeSortable(NovaRequest $request, $model = null, $resource = null): bool
     {
-        return Config::getCanSeeSortableAction()($request, $model);
+        return Config::getCanSeeSortableAction()($request, $model, $resource);
     }
 
     public static function isUriKey(?string $uri): bool

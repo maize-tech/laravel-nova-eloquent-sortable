@@ -6,7 +6,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class CanSeeSortableAction
 {
-    public function __invoke(NovaRequest $request, $model = null): bool
+    public function __invoke(NovaRequest $request, $model = null, $resource = null): bool
     {
         return true;
     }

@@ -14,7 +14,7 @@ class MoveToStartAction extends EloquentSortableAction
         return __('Move to start');
     }
 
-    public static function canSeeSortable(NovaRequest $request, $model = null): bool
+    public static function canSeeSortable(NovaRequest $request, $model = null, $resource = null): bool
     {
         if ($model?->isFirstInOrder()) {
             return false;
@@ -24,7 +24,7 @@ class MoveToStartAction extends EloquentSortableAction
             return true;
         }
 
-        return parent::canSeeSortable($request, $model);
+        return parent::canSeeSortable($request, $model, $resource);
     }
 
     public function handle(ActionFields $fields, Collection $models): mixed
