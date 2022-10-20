@@ -5,7 +5,7 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/maize-tech/laravel-nova-eloquent-sortable/Fix%20PHP%20code%20style%20issues?label=code%20style)](https://github.com/maize-tech/laravel-nova-eloquent-sortable/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/maize-tech/laravel-nova-eloquent-sortable.svg?style=flat-square)](https://packagist.org/packages/maize-tech/laravel-nova-eloquent-sortable)
 
-Easily add inline sortable actions to any model in Laravel Nova.
+Easily add inline sortable actions to any resource in Laravel Nova.
 
 >This package is heavily based on Spatie's [Eloquent Sortable](https://github.com/spatie/eloquent-sortable).
 >Please make sure to read its documentation and installation guide before proceeding!
@@ -49,18 +49,18 @@ return [
 
 ## Usage
 
-To use the package, add the `Maize\NovaEloquentSortable\HasEloquentSortable` trait to the nova model where you want to have marks:
+To use the package, add the `Maize\NovaEloquentSortable\HasEloquentSortable` trait to the nova resource where you want to have marks:
 
 ```php
 use Laravel\Nova\Resource;
 use Maize\NovaEloquentSortable\HasEloquentSortable;
 
-class Model extends Resource {
+class MyResource extends Resource {
     use HasEloquentSortable;
 }
 ```
 
-Once done, all you have to do is include all the actions you need for the given model:
+Once done, all you have to do is include all the actions you need for the given resource:
 
 ```php
 use Maize\NovaEloquentSortable\Actions\MoveOrderDownAction;
