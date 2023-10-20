@@ -7,51 +7,48 @@ use Maize\NovaEloquentSortable\Actions\MoveOrderUpAction;
 use Maize\NovaEloquentSortable\Actions\MoveToEndAction;
 use Maize\NovaEloquentSortable\Actions\MoveToStartAction;
 use Maize\NovaEloquentSortable\Tests\Support\Models\Item;
-use Maize\NovaEloquentSortable\Tests\Support\Resources\ItemResource;
 
-it('can see', function (string $class, bool $canSeeFirst, bool $canSeeMiddle, bool $canSeeLast) {
+it('can see', function (string $class, bool $canRunFirst, bool $canRunMiddle, bool $canRunLast) {
     $request = new NovaRequest();
-    $resource = new ItemResource(null);
 
     $items = Item::factory()->count(5)->create();
     $first = $items->first();
     $middle = $items[2];
     $last = $items->last();
 
-    $action = $class::for($resource);
+    $action = $class::make();
 
-    expect($action->canSeeSortable($request, $first))->toBe($canSeeFirst);
-    expect($action->canSeeSortable($request, $middle))->toBe($canSeeMiddle);
-    expect($action->canSeeSortable($request, $last))->toBe($canSeeLast);
+    expect($action->canRunSortable($request, $first))->toBe($canRunFirst);
+    expect($action->canRunSortable($request, $middle))->toBe($canRunMiddle);
+    expect($action->canRunSortable($request, $last))->toBe($canRunLast);
 })->with([
     [
         'class' => MoveOrderDownAction::class,
-        'canSeeFirst' => true,
-        'canSeeMiddle' => true,
-        'canSeeLast' => false,
+        'canRunFirst' => true,
+        'canRunMiddle' => true,
+        'canRunLast' => false,
     ],
     [
         'class' => MoveToEndAction::class,
-        'canSeeFirst' => true,
-        'canSeeMiddle' => true,
-        'canSeeLast' => false,
+        'canRunFirst' => true,
+        'canRunMiddle' => true,
+        'canRunLast' => false,
     ],
     [
         'class' => MoveOrderUpAction::class,
-        'canSeeFirst' => false,
-        'canSeeMiddle' => true,
-        'canSeeLast' => true,
+        'canRunFirst' => false,
+        'canRunMiddle' => true,
+        'canRunLast' => true,
     ],
     [
         'class' => MoveToStartAction::class,
-        'canSeeFirst' => false,
-        'canSeeMiddle' => true,
-        'canSeeLast' => true,
+        'canRunFirst' => false,
+        'canRunMiddle' => true,
+        'canRunLast' => true,
     ],
 ]);
 
 it('can move', function (string $class, int $moveFirst, int $moveMiddle, int $moveLast) {
-    $resource = new ItemResource(null);
     $fields = new ActionFields(collect(), collect());
 
     $items = Item::factory()->count(5)->create();
@@ -59,7 +56,7 @@ it('can move', function (string $class, int $moveFirst, int $moveMiddle, int $mo
     $middle = $items[2];
     $last = $items->last();
 
-    $action = $class::for($resource);
+    $action = $class::make();
 
     $action->handle($fields, collect([$first->refresh()]));
     expect($first->refresh()->order_column)->toBe($moveFirst);
