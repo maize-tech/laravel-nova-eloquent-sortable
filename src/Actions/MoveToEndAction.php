@@ -2,6 +2,7 @@
 
 namespace Maize\NovaEloquentSortable\Actions;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
@@ -14,17 +15,13 @@ class MoveToEndAction extends EloquentSortableAction
         return __('Move to end');
     }
 
-    public static function canSeeSortable(NovaRequest $request, $model = null, $resource = null): bool
+    public static function canRunSortable(NovaRequest $request, Model $model): bool
     {
-        if ($model?->isLastInOrder()) {
+        if ($model->isLastInOrder()) {
             return false;
         }
 
-        if (static::isUriKey($request->action)) {
-            return true;
-        }
-
-        return parent::canSeeSortable($request, $model, $resource);
+        return parent::canRunSortable($request, $model);
     }
 
     public function handle(ActionFields $fields, Collection $models): mixed

@@ -30,19 +30,32 @@ This is the contents of the published config file:
 
 ```php
 return [
+
     /*
     |--------------------------------------------------------------------------
-    | Sortable permission action
+    | See sortable action permission
     |--------------------------------------------------------------------------
     |
     | Here you may specify the fully qualified class name of the invokable class
-    | used to determine whether a user can see and perform sorts to a given model
-    | or not.
+    | used to determine whether a user can see sortable actions or not.
     | If null, all users who have access to Nova will have the permission.
     |
     */
 
     'can_see_sortable_action' => null,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Run sortable action permission
+    |--------------------------------------------------------------------------
+    |
+    | Here you may specify the fully qualified class name of the invokable class
+    | used to determine whether a user can sort a given model or not.
+    | If null, all users who have access to Nova will have the permission.
+    |
+    */
+
+    'can_run_sortable_action' => null,
 
 ];
 ```
@@ -71,10 +84,10 @@ use Maize\NovaEloquentSortable\Actions\MoveToStartAction;
 public function actions(NovaRequest $request)
 {
     return [
-        MoveOrderDownAction::for($this),
-        MoveToEndAction::for($this),
-        MoveOrderUpAction::for($this),
-        MoveToStartAction::for($this),
+        MoveOrderDownAction::make(),
+        MoveToEndAction::make(),
+        MoveOrderUpAction::make(),
+        MoveToStartAction::make(),
     ];
 }
 ```
@@ -127,7 +140,7 @@ The action is automatically hidden when the model is already in the first positi
 
 By default, all users who have access to Laravel Nova will be able to see all included sort actions.
 
-If you want to restrict their visibility to some users, you can define a custom `CanSeeSortableAction` invokable class.
+If you want to restrict their visibility for some users, you can define a custom `CanSeeSortableAction` invokable class.
 
 Here's an example class checking user's permissions:
 
@@ -136,7 +149,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class CanSeeSortableAction
 {
-    public function __invoke(NovaRequest $request, $model = null, $resource = null): bool
+    public function __invoke(NovaRequest $request): bool
     {
         return $request->user()->can('sort_models');
     }
@@ -147,6 +160,33 @@ Once done, all you have to do is reference your custom class in `can_see_sortabl
 
 ``` php
 'can_see_sortable_action' => \Path\To\CanSeeSortableAction::class,
+```
+
+## Define a custom run permission
+
+By default, all users who have access to Laravel Nova will be able to run all included sort actions.
+
+If you want to restrict the permission for some users, you can define a custom `CanRunSortableAction` invokable class.
+
+Here's an example class checking user's permissions:
+
+```php
+use Illuminate\Database\Eloquent\Model;
+use Laravel\Nova\Http\Requests\NovaRequest;
+
+class CanRunSortableAction
+{
+    public function __invoke(NovaRequest $request, Model $model): bool
+    {
+        return $request->user()->can('sort_model', $model);
+    }
+}
+```
+
+Once done, all you have to do is reference your custom class in `can_run_sortable_action` attribute under `config/nova-eloquent-sortable.php`:
+
+``` php
+'can_run_sortable_action' => \Path\To\CanRunSortableAction::class,
 ```
 
 ## Testing
