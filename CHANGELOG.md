@@ -2,6 +2,12 @@
 
 All notable changes to `laravel-nova-eloquent-sortable` will be documented in this file.
 
+## 3.0.1 - 2023-11-03
+
+### What's Changed
+
+- Fixed OrderColumn class minor issues
+
 ## 3.0.0 - 2023-11-03
 
 ### What's Changed
